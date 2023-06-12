@@ -1,258 +1,228 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import './Navbar.css';
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  SwipeableDrawer,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import HomeIcon from "@mui/icons-material/Home";
+import MovieIcon from "@mui/icons-material/Movie";
+import TvIcon from "@mui/icons-material/Tv";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+import "./Navbar.css";
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-
-export default function Navbar(props: any): JSX.Element {
-     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+export default function Navbar2(props: any) {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobileSize = useMediaQuery(
+    "(max-width: 660px) and (max-height: 820px)"
+  );
+  const [showItems, setShowItems] = React.useState(!isMobileSize);
+  const [profileMenuAnchor, setProfileMenuAnchor] =
     React.useState<null | HTMLElement>(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const location = useLocation();
+  const currentRoute = location.pathname; // Obter a rota atual
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setProfileMenuAnchor(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+  const handleClose = () => {
+    setProfileMenuAnchor(null); // alteração aqui
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
+  const navigateBack = () => {
+    navigate(-1); // Retorna à rota anterior
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  ////////////////////////////////////
+  React.useEffect(() => {
+    setShowItems(!isMobileSize);
+  }, [isMobileSize]);
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-function navegarParaPerfil(event: any) {
+  function navegarParaPerfil(event: any) {
     props.estadoPerfil(event);
     navigate("/perfil");
   }
 
-   function handleClick(event: any) {
-     props.onLogout(event);
-     navigate("/login");
-   }
+  function handleClick(event: any) {
+    props.onLogout(event);
+    navigate("/login");
+  }
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={navegarParaPerfil}>
-        <>Profile</>
-      </MenuItem>
-      <MenuItem onClick={handleClick}>Sair</MenuItem>
-    </Menu>
-  );
+  const menuItems = [
+    { text: "Inicio", icon: <HomeIcon />, link: "/inicio" },
+    { text: "Filmes", icon: <MovieIcon />, link: "/filmes" },
+    { text: "Séries", icon: <TvIcon />, link: "/series" },
+    { text: "Bombando", icon: <WhatshotIcon />, link: "/bombando" },
+    {
+      text: <p style={{ whiteSpace: "nowrap" }}>Minha lista</p>,
+      icon: <PlaylistAddCheckIcon />,
+      link: "/minha-lista",
+    },
+  ];
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+  if (drawerOpen) {
+    menuItems.push({ text: "Sair", icon: <WhatshotIcon />, link: "/login" });
+    menuItems.unshift({
+      text: "Perfil",
+      icon: <WhatshotIcon />,
+      link: "/perfil",
+    });
+  }
 
   return (
-    <Box className="navbar">
-      <AppBar position="static" sx={{ backgroundColor: "#18191D" }}>
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <div id="textosNav">
-              <p id="logo">
-                <strong>FLIX-NOW</strong>
-              </p>
-              <ul id="lista">
-                <li>
-                    <nav>
-                        <Link to="/inicio">Inicio</Link>
-                    </nav>    
-                </li>
-                {/* <li>
-                  <Link to="/series">Séries</Link>
-                </li>
-                <li>
-                  <Link to="/filmes">Filmes</Link>
-                </li>
-                <li>
-                  <Link to="/bombando">Bombando</Link>
-                </li>
-                <li>
-                  <Link to="/minha-lista">Minha lista</Link>
-                </li> */}
-                <li>
-                  <div>Séries</div>
-                </li>
-                <li>
-                  <div >Filmes</div>
-                </li>
-                <li>
-                  <div>Bombando</div>
-                </li>
-                <li>
-                  <div>Minha lista</div>
-                </li>
-              </ul>
+    <AppBar>
+      <Toolbar id="navbar">
+        <Typography
+          style={{ whiteSpace: "nowrap" }}
+          id="logo"
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1 }}
+        >
+          FLIX-NOW
+        </Typography>
+
+        {isSmallScreen ? (
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon />
+          </IconButton>
+        ) : (
+          <>
+            <div id="lista">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.text}
+                  to={item.link}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: showItems ? "block" : "none",
+                  }}
+                >
+                  <Typography
+                    style={{ display: "flex" }}
+                    variant="subtitle1"
+                    sx={{ marginRight: 4 }}
+                  >
+                    {item.text}
+                  </Typography>
+                </Link>
+              ))}
             </div>
-          </Box>
-          <Box>
-            <IconButton size="large" aria-label="search" color="inherit">
-              <Badge color="error">
-                <SearchIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="small"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+          </>
+        )}
+
+        {isSmallScreen ? (
+          <SwipeableDrawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={handleDrawerToggle}
+            onOpen={handleDrawerToggle}
+          >
+            <List>
+              {menuItems.map((item) => (
+                <Link
+                  key={item.text}
+                  to={item.link}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ListItem button onClick={handleDrawerToggle}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+          </SwipeableDrawer>
+        ) : (
+          ""
+        )}
+
+        {!isSmallScreen && (
+          <div>
             <IconButton
               size="large"
-              edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
+              aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle sx={{ fontSize: "2.5rem" }} />
+              <AccountCircleIcon />
             </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+            <Menu
+              id="menu-appbar"
+              anchorEl={profileMenuAnchor} // alteração aqui
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(profileMenuAnchor)} // alteração aqui
+              onClose={handleClose}
             >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+              {Boolean(profileMenuAnchor) && (
+                <div>
+                  {currentRoute !== "/perfil" &&
+                  !currentRoute.includes("/detalhes/") ? (
+                    <div>
+                      <MenuItem key="perfil" onClick={navegarParaPerfil}>
+                        Perfil
+                      </MenuItem>
+                      <MenuItem key="configuracoes" onClick={handleClose}>
+                        Configurações
+                      </MenuItem>
+                      <MenuItem key="sair" onClick={handleClick}>
+                        Sair
+                      </MenuItem>
+                    </div>
+                  ) : (
+                    <div>
+                      <MenuItem key="voltar" onClick={navigateBack}>
+                        Voltar
+                      </MenuItem>
+                    </div>
+                  )}
+                </div>
+              )}
+            </Menu>
+          </div>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
+

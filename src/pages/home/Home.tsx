@@ -1,6 +1,7 @@
 import MovieCard from '../../components/movieCard/MovieCard';
 import './Home.css'
 import { Film } from '../../models/Film';
+import { useNavigate } from "react-router-dom";
 
 import Pagination from "@mui/material/Pagination";
 import { useEffect, useState } from 'react';
@@ -9,11 +10,6 @@ import axios from 'axios';
 import CarouselHome from './CarouselHome';
 import FundoHome from '../../components/fundoHome/FundoHome';
 import Footer from '../../components/footer/Footer';
-
-// interface HomeProps {
-//   filmess: Film[];
-
-// }
 
 export function Home(): JSX.Element {
    const [page, setPage] = useState<number>(1);
@@ -24,7 +20,6 @@ export function Home(): JSX.Element {
    useEffect(() => {
      axios.get<PopularFilms>(baseURL).then((response) => {
        setFilmes(response.data.results);
-      //  console.log(response.data.results);
      });
    }, []);
 
@@ -36,7 +31,6 @@ export function Home(): JSX.Element {
     const start = (page - 1) * itemsPerPage;
     const end = Math.min(start + itemsPerPage, filmes.length);
     const currentPageItems = filmes.slice(start, end);
-    
   return (
     <>
       <FundoHome />
@@ -46,7 +40,8 @@ export function Home(): JSX.Element {
       </p>
       <div id="listaFilmesPopulares">
         {currentPageItems.map((filme: Film, index: number) => (
-            <MovieCard key={index} filmes={filme} />
+              <MovieCard key={index} filmes={filme} />
+
         ))}
         <div className='movie-card' style={{ display: "flex", justifyContent: "center" }}>
           <Pagination

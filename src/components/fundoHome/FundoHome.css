@@ -6,8 +6,7 @@
     object-fit: cover;
     opacity: 0.1; //Define a transparência da imagem
     transition: opacity 0.5s ease-in-out; /* Define a transição */
+    pointer-events: none; /* Impede que o fundo receba eventos de clique */
 }
 
 
-
-```

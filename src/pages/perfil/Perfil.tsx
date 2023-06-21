@@ -11,7 +11,7 @@ export default function Perfil(props: any) {
   const [email, setEmail] = useState('johndoe@example.com');
   const [password, setPassword] = useState('********');
   const [profileType, setProfileType] = useState('user');
-  const [profileImage, setProfileImage] = useState('https://via.placeholder.com/150');
+  const [profileImage, setProfileImage] = useState('https://th.bing.com/th/id/R.1871862d87bb8037d953317fb4497189?rik=MBf1NyuchSQUtQ&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fProfile.png&ehk=Ouu2uMvvMPnkP1bdIY2BTAzbwhRoG9p03NUzbwGLhlg%3d&risl=&pid=ImgRaw&r=0');
 
   const handleEditProfile = () => {
     setIsEditing(true);
@@ -38,25 +38,27 @@ export default function Perfil(props: any) {
       case 'email':
         setEmail(value);
         break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'profileType':
+        case 'password':
+          setPassword(value);
+          break;
+          case 'profileType':
         setProfileType(value);
         break;
-      case 'profileImage':
-        setProfileImage(value);
-        break;
-      default:
-        break;
-    }
-  }
-
-  return (
-    <>
+        case 'profileImage':
+          setProfileImage(value);
+          break;
+          default:
+            break;
+          }
+        }
+        
+        return (
+          <>
       <Navbar2
       />
-      <FundoHome />
+          <FundoHome 
+          />
+          
       <div style={{ height: "90vh" }} className="profile">
         <div className="profile-header">
           <img src={profileImage} alt="Profile" />

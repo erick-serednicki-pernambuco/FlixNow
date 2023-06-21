@@ -59,6 +59,7 @@ export default function Login() {
           />
           <input
             placeholder="Senha"
+            type="password"
             name="password"
             value={password}
             onChange={handleInputChange}

@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Film } from "../../models/Film";
 import "./CarouselHome.css";
-import { PopularFilms } from "../../App";
+
 import axios from "axios";
 import FundoHome from "../../components/fundoHome/FundoHome";
 import { useMediaQuery } from "react-responsive";
@@ -21,7 +21,7 @@ const CarouselHome = (props: any) => {
   const baseURL = `https://api.themoviedb.org/3/movie/popular?api_key=c53174418b2a81eacf8a7966fa850c98&language=pt-BR&page=${page}`;
 
   useEffect(() => {
-    axios.get<PopularFilms>(baseURL).then((response) => {
+    axios.get(baseURL).then((response) => {
       setFilmes(response.data.results);
     });
   }, []);

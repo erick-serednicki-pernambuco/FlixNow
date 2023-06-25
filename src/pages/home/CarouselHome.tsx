@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Film } from "../../models/Film";
 import "./CarouselHome.css";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import FundoHome from "../../components/fundoHome/FundoHome";
 import { useMediaQuery } from "react-responsive";
 
 const CarouselHome = (props: any) => {
-  const [filmes, setFilmes] = React.useState<Film[]>([]);
-  const [page, setPage] = React.useState<number>(2);
-  const [itemsPerPage, setItemsPerPage] = React.useState<number>(10);
+  const [filmes, setFilmes] = useState<Film[]>([]);
+  const [page, setPage] = useState<number>(2);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [selectedFilmId, setSelectedFilmId] = useState<string | null>(null);
 
   const start = (page - 1) * itemsPerPage;
   const end = Math.min(start + itemsPerPage, filmes.length);
@@ -46,14 +48,26 @@ const CarouselHome = (props: any) => {
     return 1;
   };
 
+  const navigate = useNavigate();
+
+  const handleFilmClick = (filmId: string) => {
+    setSelectedFilmId(filmId);
+  };
+
+  useEffect(() => {
+    if (selectedFilmId) {
+      navigate(`/detalhes/${selectedFilmId}`);
+    }
+  }, [selectedFilmId, navigate]);
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: getSlidesToShow(), // Varia o número de slides mostrados de acordo com o tamanho da tela
-    slidesToScroll: getSlidesToScroll(), // Varia o número de slides deslocados de acordo com o tamanho da tela
+    slidesToShow: getSlidesToShow(),
+    slidesToScroll: getSlidesToScroll(),
     autoplay: true,
-    autoplaySpeed: 2500, // tempo em milissegundos (5 segundos)
+    autoplaySpeed: 2500,
   };
 
   return (
@@ -61,7 +75,10 @@ const CarouselHome = (props: any) => {
       <div className="carousel-home">
         <Slider {...settings}>
           {currentPageItems.map((filme: Film, index: number) => (
-            <div key={index}>
+            <div
+              key={index}
+              onClick={() => handleFilmClick(filme.id.toString())}
+            >
               <img
                 className="imagem"
                 src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
@@ -76,4 +93,3 @@ const CarouselHome = (props: any) => {
 };
 
 export default CarouselHome;
-

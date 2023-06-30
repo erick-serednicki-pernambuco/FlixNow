@@ -20,3 +20,13 @@ export async function login( email: string, senha: string ): Promise<string> {
 export async function logout(): Promise<void> {
   await signOut(auth);
 }
+
+export async function createUser(email, senha) {
+  return await createUserWithEmailAndPassword(auth, email, senha)
+    .then((userCredential) => userCredential.user.uid)
+    .catch((error) => {
+      // Lidar com erros de criação de usuário, se necessário
+      throw new Error('Erro ao criar usuário: ' + error.message)
+    })
+}
+

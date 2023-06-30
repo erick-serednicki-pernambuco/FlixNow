@@ -1,87 +1,88 @@
-import { useState } from "react";
+import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import "./Login.css";
 import FundoHome from "../../components/fundoHome/FundoHome";
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import AuthContext from '../../services/AuthContext';
+
+interface LoginData {
+  email: string;
+  senha: string;
+}
 
 export default function Login() {
-  const [isEditing, setIsLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginData>();
   const navigate = useNavigate();
+  const { handleLogin } = useContext(AuthContext);
+  const [errorLogin, setErrorLogin] = useState("");
 
-
-  const handleLogin = () => {
-    setIsLogin(true);
+  const validaEmail = {
+    required: {
+      value: true,
+      message: 'Email é obrigatorio',
+    },
+    pattern: {
+      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+      message: 'Email inválido',
+    }
   };
 
-  const handleLoginTrue = () => {
-    setIsLogin(true);
-    navigate(`/inicio`);
+  const validaSenha = {
+    required: {
+      value: true,
+      message: 'Senha é obrigatoria',
+    },
+    minLength: {
+      value: 8,
+      message: 'Senha deve ter no mínimo 8 caracteres',
+    }
   };
 
-  const handleRecuperarSenha = () => {
-    setIsLogin(false);
-    navigate(`/recuperar`);
-  };
+  async function onSubmit(data: LoginData) {
+    const { email, senha } = data;
 
-  const handleInputChange = (event: any) => {
-    const { name, value } = event.target;
+    setErrorLogin("");
 
-    switch (name) {
-      
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      default:
-        break;
+    try {
+      await handleLogin(email, senha);
+      navigate("/inicio");
+    } catch (error) {
+      if(error instanceof Error)
+      {throw new Error(error.message);}
     }
   }
+
+  const handleRecuperarSenha = () => {
+    navigate(`/recuperar`);
+  };
 
   return (
     <>
       <FundoHome />
-     
-    <div className="profile">
-    <h1>
-        Login
-      </h1>
-      {!isEditing ? (
+      <div className="profile">
+        <h1>Login</h1>
         <div className="profile-form">
-          <input
-            placeholder="E-mail"
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleInputChange}
-          />
-          <input
-            placeholder="Senha"
-            name="password"
-            value={password}
-            onChange={handleInputChange}
-          />
-         
-          <div className="profile-form-buttons">
-            <button onClick={handleLoginTrue}>Login</button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {errorLogin && <p className="erro">{errorLogin}</p>}
+            <div>
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" {...register("email", validaEmail)} />
+              {errors.email && <p className="erro">{errors.email.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="senha">Senha</label>
+              <input type="password" id="senha" {...register("senha", validaSenha)} />
+              {errors.senha && <p className="erro">{errors.senha.message}</p>}
+            </div>
+            
+            <div className="profile-form-buttons">
+            <button type="submit" onClick={() =>  handleLogin(email, senha)}>Entrar</button>
             <button onClick={handleRecuperarSenha}>Recuperar Senha</button>
           </div>
-        </div>
-      ) : (
-        <div className="profile-details">
+          </form>
          
-          <p>
-            <strong>E-mail:</strong> {email}
-          </p>
-          <p>
-            <strong>Password:</strong> {password}
-          </p>
-          
         </div>
-      )}
-    </div>
-      </>
+      </div>
+    </>
   );
 }

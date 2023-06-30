@@ -4,7 +4,6 @@ import "./MovieCard.css";
 function MovieCard(props: any) {
 const {filmes} = props;
 const navigate = useNavigate();
-// const baseURL = `https://api.themoviedb.org/3/movie/${filmes.id}/popular?api_key=c53174418b2a81eacf8a7966fa850c98&language=pt-BR&page=page`;
 
 function detalhes() {
     navigate(`/detalhes/${filmes.id}`);

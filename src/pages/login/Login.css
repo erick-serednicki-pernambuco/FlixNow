@@ -1,4 +1,4 @@
-.profile {
+/* .profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,8 +12,35 @@
     opacity: 0.9;
     background-color: #18191D;
     color: white;
+  } */
+
+   .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    width: 30vw;
+    height: 40vh;
+    margin-left: 35vw;
+    margin-top: 25vh;
+    border-radius: 10px;
+    opacity: 0.9;
+    background-color: #242525;
+    color: white;
   }
   
+  @media (max-width: 768px) {
+    
+     .profile {
+      width: 69vw;
+      margin-left: 10vw;
+      margin-top: 15vh;
+    }
+  }  
+
+
+
   .profile img {
     margin-top: 20px;
   }

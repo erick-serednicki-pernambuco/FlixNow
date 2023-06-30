@@ -1,36 +1,35 @@
 #textosNav {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 #lista {
-    display: flex;
-    list-style: none;
-    font-size: 20px;
-    align-items: center;
-    justify-content: space-around;
-    width: 40%;
-    list-style: none;
-    link-style: none;
+  display: flex;
+  list-style: none;
+  font-size: 20px;
+  align-items: center;
+  justify-content: space-around;
+  list-style: none;
+  link-style: none;
+  margin-right: 10vw;
 }
 
-li{
-    link-style: none;
-    list-style: none;
+li {
+  link-style: none;
+  list-style: none;
 }
 
 #logo {
-    color:red;
-    font-size: 30px;
-    font-weight: bold;
-    width: 10vw;
+  color: red;
+  font-size: 30px;
+  font-weight: bold;
+  width: 15vw;
 }
 
-.navbar {
+#navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  // outros estilos que você queira adicionar
-}
+  }

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Pagination from "@mui/material/Pagination";
 import { useEffect, useState } from 'react';
-import { PopularFilms } from '../../App';
+import {  } from '../../App';
 import axios from 'axios';
 import CarouselHome from './CarouselHome';
 import FundoHome from '../../components/fundoHome/FundoHome';
@@ -18,7 +18,7 @@ export function Home(): JSX.Element {
    const baseURL = `https://api.themoviedb.org/3/movie/popular?api_key=c53174418b2a81eacf8a7966fa850c98&language=pt-BR&page=${page}`;
 
    useEffect(() => {
-     axios.get<PopularFilms>(baseURL).then((response) => {
+     axios.get(baseURL).then((response) => {
        setFilmes(response.data.results);
      });
    }, []);

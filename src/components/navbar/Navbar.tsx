@@ -74,9 +74,7 @@ export default function Navbar2(props: any) {
 
   const menuItems = [
     { text: "Inicio", icon: <HomeIcon />, link: "/inicio" },
-    { text: "Filmes", icon: <MovieIcon />, link: "/filmes" },
-    { text: "Séries", icon: <TvIcon />, link: "/series" },
-    { text: "Bombando", icon: <WhatshotIcon />, link: "/bombando" },
+    
     {
       text: <p style={{ whiteSpace: "nowrap" }}>Minha lista</p>,
       icon: <PlaylistAddCheckIcon />,

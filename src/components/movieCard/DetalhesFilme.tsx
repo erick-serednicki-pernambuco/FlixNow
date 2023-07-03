@@ -64,6 +64,7 @@ export default function DetalhesFilme() {
             <p>{filme.overview}</p>
           </div>
         </div>
+        <button>Salvar nos favoritos</button>
       </div>
     </>
   );

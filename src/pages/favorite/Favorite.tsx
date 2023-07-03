@@ -1,5 +1,5 @@
 import MovieCard from '../../components/movieCard/MovieCard';
-import './Home.css'
+import './Favorite.css'
 import { Film } from '../../models/Film';
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +7,10 @@ import Pagination from "@mui/material/Pagination";
 import { useEffect, useState } from 'react';
 import {  } from '../../App';
 import axios from 'axios';
-import CarouselHome from './CarouselHome';
+
 import FundoHome from '../../components/fundoHome/FundoHome';
 
-
-export function Home(): JSX.Element {
+export function Favorite(): JSX.Element {
    const [page, setPage] = useState<number>(1);
   const [filmes, setFilmes] = useState<Film[]>([]);
    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
@@ -34,9 +33,8 @@ export function Home(): JSX.Element {
   return (
     <>
       <FundoHome />
-      <CarouselHome />
       <p className="popular">
-        <strong>Filmes Populares</strong>
+        <strong>Minha Lista</strong>
       </p>
       <div id="listaFilmesPopulares">
         {currentPageItems.map((filme: Film, index: number) => (
@@ -60,7 +58,7 @@ export function Home(): JSX.Element {
           />
         </div>
       </div>
-      
+     
     </>
   );
 }

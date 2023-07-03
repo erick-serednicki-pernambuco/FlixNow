@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import DetalhesFilme from "./components/movieCard/DetalhesFilme";
 import Login from "./pages/login/Login";
 import RecuperarSenha from "./pages/login/ReuerarSenha";
+import { Favorite } from "./pages/favorite/Favorite";
 
 export default function App() {
   const [onPerfil, setOnPerfil] = useState<boolean>(false);
@@ -31,6 +32,8 @@ export default function App() {
              element={<Layout estadoPerfil={estadoPerfil} onPerfil={onPerfil} onLogout={handleLogout}/>}
              >
               <Route path="inicio" element={<Home />} />
+              <Route path="minha-lista" element={<Favorite/>} />
+              
             </Route>
           </>
           <Route path="login" element={<Login />} />

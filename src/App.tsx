@@ -6,7 +6,7 @@ import Perfil from "./pages/perfil/Perfil";
 import Layout from "./components/Layout";
 import DetalhesFilme from "./components/movieCard/DetalhesFilme";
 import Login from "./pages/login/Login";
-import RecuperarSenha from "./pages/login/ReuerarSenha";
+import RecuperarSenha from "./pages/login/RecuperarSenha";
 import { Favorite } from "./pages/favorite/Favorite";
 
 export default function App() {

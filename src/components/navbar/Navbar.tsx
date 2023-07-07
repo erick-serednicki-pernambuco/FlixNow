@@ -74,9 +74,9 @@ export default function Navbar2(props: any) {
 
   const menuItems = [
     { text: "Inicio", icon: <HomeIcon />, link: "/inicio" },
-    
+ 
     {
-      text: <p style={{ whiteSpace: "nowrap" }}>Minha lista</p>,
+      text: "Minha lista",
       icon: <PlaylistAddCheckIcon />,
       link: "/minha-lista",
     },
@@ -223,4 +223,3 @@ export default function Navbar2(props: any) {
     </AppBar>
   );
 }
-

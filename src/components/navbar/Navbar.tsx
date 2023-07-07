@@ -200,9 +200,6 @@ export default function Navbar2(props: any) {
                       <MenuItem key="perfil" onClick={navegarParaPerfil}>
                         Perfil
                       </MenuItem>
-                      <MenuItem key="configuracoes" onClick={handleClose}>
-                        Configurações
-                      </MenuItem>
                       <MenuItem key="sair" onClick={handleClick}>
                         Sair
                       </MenuItem>
@@ -216,7 +213,7 @@ export default function Navbar2(props: any) {
                   )}
                 </div>
               )}
-            </Menu>
+            </Menu>+
           </div>
         )}
       </Toolbar>

@@ -41,3 +41,40 @@
   justify-content: space-around;
   margin-left: 1vw;
 }
+
+
+.profile-form-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.profile-form-buttons button {
+  margin: 0px 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile-form-buttons button:hover {
+  background-color: #3E8E41;
+}
+
+.profile-details button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile-details button:hover {
+  background-color: #3E8E41;
+}

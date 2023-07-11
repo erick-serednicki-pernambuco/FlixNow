@@ -74,9 +74,9 @@ export default function Navbar2(props: any) {
 
   const menuItems = [
     { text: "Inicio", icon: <HomeIcon />, link: "/inicio" },
-    
+ 
     {
-      text: <p style={{ whiteSpace: "nowrap" }}>Minha lista</p>,
+      text: "Minha lista",
       icon: <PlaylistAddCheckIcon />,
       link: "/minha-lista",
     },
@@ -200,9 +200,6 @@ export default function Navbar2(props: any) {
                       <MenuItem key="perfil" onClick={navegarParaPerfil}>
                         Perfil
                       </MenuItem>
-                      <MenuItem key="configuracoes" onClick={handleClose}>
-                        Configurações
-                      </MenuItem>
                       <MenuItem key="sair" onClick={handleClick}>
                         Sair
                       </MenuItem>
@@ -216,11 +213,10 @@ export default function Navbar2(props: any) {
                   )}
                 </div>
               )}
-            </Menu>
+            </Menu>+
           </div>
         )}
       </Toolbar>
     </AppBar>
   );
 }
-

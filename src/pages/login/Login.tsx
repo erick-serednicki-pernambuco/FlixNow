@@ -19,7 +19,7 @@ export default function Login() {
   const validaEmail = {
     required: {
       value: true,
-      message: 'Email é obrigatorio',
+      message: 'Email é obrigatório',
     },
     pattern: {
       value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
@@ -30,7 +30,7 @@ export default function Login() {
   const validaSenha = {
     required: {
       value: true,
-      message: 'Senha é obrigatoria',
+      message: 'Senha é obrigatória',
     },
     minLength: {
       value: 8,
@@ -47,8 +47,9 @@ export default function Login() {
       await handleLogin(email, senha);
       navigate("/inicio");
     } catch (error) {
-      if(error instanceof Error)
-      {throw new Error(error.message);}
+      if (error instanceof Error) {
+        setErrorLogin("Erro de login, email ou senha inválido");
+      }
     }
   }
 
@@ -76,7 +77,7 @@ export default function Login() {
             </div>
             
             <div className="profile-form-buttons">
-            <button type="submit" onClick={() =>  handleLogin(email, senha)}>Entrar</button>
+            <button type="submit">Entrar</button>
             <button onClick={handleRecuperarSenha}>Recuperar Senha</button>
           </div>
           </form>

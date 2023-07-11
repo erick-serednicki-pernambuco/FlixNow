@@ -18,7 +18,7 @@ const firebaseConfig: FirebaseOptions = {
 
 const app = initializeApp(firebaseConfig);
 
-const urlAPI: string = "https://flixnow-cc972-default-rtdb.firebaseio.com/todo.json";
+const urlAPI: string = "https://flixnow-cc972-default-rtdb.firebaseio.com/";
 
 // Initialize Firebase
 export { app, firebaseConfig, urlAPI };

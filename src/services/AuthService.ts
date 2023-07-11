@@ -14,7 +14,7 @@ export async function login( email: string, senha: string ): Promise<string> {
       }
     });
 
-    return `$userId`
+    return `${userId}`
 }
 
 export async function logout(): Promise<void> {

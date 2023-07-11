@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./DetalhesFilme.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -8,11 +8,17 @@ import firebase from "firebase/app";
 import "firebase/database";
 import Navbar from "../navbar/Navbar";
 import FundoHome from "../fundoHome/FundoHome";
+import 'firebase/auth';
+import 'firebase/firestore';
+import AuthContext from "../../services/AuthContext";
+import {insereFavorito, removeFavorito} from "../../services/FireStoreService"
+
 
 export default function DetalhesFilme() {
   const { id } = useParams<{ id: string }>();
   const [filme, setFilme] = useState<Film>();
-
+  const {userId} = useContext(AuthContext);
+  const [favorite, setFavorite]= useState(false);
   useEffect(() => {
     const baseURL = `https://api.themoviedb.org/3/movie/${id}?api_key=c53174418b2a81eacf8a7966fa850c98&language=pt-BR`;
     axios.get<Film>(baseURL).then((response) => {
@@ -21,21 +27,22 @@ export default function DetalhesFilme() {
     });
   }, [id]);
 
-  // const adicionarAosFavoritos = () => {
-  //   const userId = firebase.auth().currentUser?.uid;
-  //   if (userId && filme) {
-  //     firebase.database().ref(`users/${userId}/favoritos/${id}`).set({
-  //       movieId: id,
-  //       title: filme.title,
-  //     });
-  //     console.log("Filme adicionado aos favoritos");
-  //   }
-  // };
+  
 
   if (!filme) {
     return <div>Loading...</div>;
   }
 
+  const hendleFavoritar =async () => {
+    
+    if (favorite == false) {
+      await insereFavorito({ userId, id });
+      setFavorite(true);
+    } else {
+      removeFavorito({ userId , id});
+      setFavorite(false);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -74,8 +81,8 @@ export default function DetalhesFilme() {
             <p>Sinopse:</p>
             <p>{filme.overview}</p>
           </div>
-          <button className="favoritos-button" >
-            Salvar nos favoritos
+          <button className="favoritos-button" onClick={ hendleFavoritar}>
+            {favorite ? "Salvar nos favoritos" : "Remover dos favoritos"}
           </button>
         </div>
       </div>
